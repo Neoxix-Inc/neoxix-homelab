@@ -1,33 +1,32 @@
-# IPsec VPN IKEv2 — FortiGate 60F
-
-## Information
-| Parameter | Value |
-|---|---|
-| Protocol | IPsec IKEv2 |
-| Authentication | X.509 Certificates (ADCS) |
-| Interface | BELL_WAN1 (wan1) |
-| IP Pool | 10.200.0.100-200/24 |
-| Transport | UDP/500, UDP/4500 |
-
-## Certificates
-| Certificate | CN | Issuer | Expiry | Location |
-|---|---|---|---|---|
-| [REDACTED_VPN_IDENTITY] | [REDACTED_VPN_IDENTITY] | Neoxix-Root-CA | 2028-06-18 | FortiGate Local Certs |
-| CA_Cert_1 | Neoxix-Root-CA | Neoxix-Root-CA | - | FortiGate CA Certs |
-| [REDACTED_VPN_IDENTITY]-client | [REDACTED_VPN_IDENTITY] | Neoxix-Root-CA | 2028-06-18 | iPad Keychain |
-
-## Tunnel Config
-- Name: Neoxix-VPN
-- IKE Version: 2
-- Encryption: AES256
-- Hash: SHA256
-- DH Group: 14
-
-## Client Config (iOS Native IKEv2)
-- Server: [REDACTED_PUBLIC_VPN_ENDPOINT]
-- Remote ID: [REDACTED_VPN_IDENTITY]
-- Local ID: [REDACTED_VPN_IDENTITY]
-- Certificate: [REDACTED_VPN_IDENTITY]
+# IKEv2 Remote-Access VPN
 
 ## Status
-- Tunnel: Configured (test pending from external network)
+
+The FortiGate IKEv2 remote-access VPN previously passed a test, was later stopped, and is now under diagnosis pending revalidation. It is not currently operational or presented as an available remote-access service.
+
+## Sanitized design summary
+
+The design uses IKEv2 on the FortiGate for encrypted remote access. Authentication material, external addresses, certificate names, user or client identities, endpoint identifiers, address pools, and live connection details are intentionally excluded.
+
+The intended high-level flow is:
+
+1. An authorized, managed client initiates an IKEv2 connection to the firewall.
+2. The firewall validates the configured authentication material and negotiates the protected tunnel.
+3. Firewall policy limits authenticated clients to explicitly approved homelab resources.
+4. Relevant connection and security events are logged for troubleshooting and review.
+
+This summary is not a deployable configuration and does not establish the current authentication method or cryptographic parameters.
+
+## Diagnosis and safe revalidation
+
+Before the status can be promoted, revalidation should confirm:
+
+- The firewall configuration is internally consistent and uses currently supported secure settings.
+- Required authentication material is valid, protected, and trusted only where intended.
+- A test from an external network completes without publishing the external endpoint.
+- An authorized client can reach only approved test resources.
+- An unauthorized client or disallowed destination is rejected.
+- Tunnel establishment, traffic flow, disconnection, and relevant alerts appear in sanitized logs.
+- The service remains stable after restart and results are documented with secrets removed.
+
+Until these checks pass and are recorded, the VPN remains under diagnosis.

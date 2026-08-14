@@ -1,37 +1,45 @@
-# Wazuh SIEM — SRV-WAZUH
+# Wazuh Monitoring
 
-## Information
-| Parameter | Value |
+## Current state
+
+Wazuh runs on an Ubuntu Server 22.04 virtual machine under VMware ESXi. It provides centralized monitoring and security telemetry for the homelab. Exact management endpoints, account names, credentials, software versions, ports, and credential-storage details are intentionally omitted.
+
+## Endpoint agents
+
+Six endpoint agents are connected:
+
+| Endpoint type | Connected agents | Status |
+|---|---:|---|
+| Windows | 2 | Available |
+| Linux | 4 | Available |
+| **Total** | **6** | **Available** |
+
+Endpoint agents are distinct from devices that provide telemetry through agentless collection or Syslog.
+
+## Source coverage
+
+Available sources include:
+
+- Windows endpoints through Wazuh agents.
+- Linux endpoints through Wazuh agents.
+- VMware ESXi through agentless or log-based collection.
+- FortiGate through Syslog.
+- Synology NAS through agentless or log-based collection.
+
+Host inventories and destination details are omitted where they are unnecessary to explain coverage.
+
+## Available capabilities
+
+| Capability | Status |
 |---|---|
-| Hostname | SRV-WAZUH |
-| IP | 10.50.0.30/24 |
-| OS | Ubuntu 22.04 LTS |
-| Wazuh Version | 4.12.0 |
-| Dashboard | https://10.50.0.30 |
+| File Integrity Monitoring (FIM) | Available |
+| Security Configuration Assessment (SCA) | Available |
+| Vulnerability detection | Available |
+| Alerts | Available |
+| Dashboards | Available |
 
-## Components
-| Component | Port | Status |
-|---|---|---|
-| wazuh-manager | 1514/tcp, 1515/tcp | Active |
-| wazuh-indexer | 9200/tcp | Active |
-| wazuh-dashboard | 443/tcp | Active |
-| Syslog receiver | 514/udp | Active |
+## Validation boundary
 
-## Agents
-| ID | Name | IP | OS | Group | Status |
-|---|---|---|---|---|---|
-| 001 | DC01-HQ | 10.50.0.10 | WS2025 | windows-servers | Active |
-| 002 | DC02-BR2 | 10.50.0.11 | WS2025 | windows-servers | Active |
-| 003 | Bastion | 10.90.0.99 | Ubuntu 22.04 | linux-servers | Active |
-| 004 | SRV-FILE01 | 10.50.0.21 | WS2025 | windows-servers | Active |
+The deployment demonstrates homelab monitoring configuration, endpoint-agent connectivity, and log centralization. No security incident has yet been fully investigated. This work is not presented as production security operations experience.
 
-## Syslog Sources
-| Source | IP | Protocol | Status |
-|---|---|---|---|
-| FortiGate 60F | 10.50.0.1 | UDP/514 | Active |
-| ESXi | 10.50.0.20 (vmk1) | UDP/514 | Active |
-| NAS DS925+ | 10.50.0.5 | UDP/514 | Active |
-
-## Credentials
-- Dashboard: admin / (see password file)
-- Wazuh API: wazuh / (see password file)
+Future validation should document representative test events, alert quality, source coverage, retention, access review, backup, and recovery without exposing credentials or sensitive infrastructure details.
