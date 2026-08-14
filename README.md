@@ -1,234 +1,178 @@
-# README.md — Neoxix Inc. GitHub Organization Profile
+# Neoxix Homelab
 
-# Content to copy into GitHub
+Personal technical homelab and portfolio project maintained by **Kodjo Mathias Akah**, an IT Technician focused on technical support, systems, networking, and junior infrastructure. The environment is used to build, operate, troubleshoot, and document infrastructure skills in a controlled setting. It is not a production MSP environment or a client engagement.
 
----
+## Status legend
 
-<div align="center">
+| Status | Meaning |
+|---|---|
+| Operational and validated | Deployed and confirmed to perform the stated function |
+| Configured; validation pending | Present on the relevant infrastructure, but awaiting documented end-to-end validation |
+| Deployed; improving | Running, with configuration, documentation, or coverage still being refined |
+| Under diagnosis | Implemented or configured, but not yet confirmed fully operational |
+| Planned | Future learning or laboratory work; not presented as current capability |
+| In progress | Work or study that has started but is not complete |
+| In preparation | Certification study underway; certification not yet obtained |
+| Planned learning and future labs | Roadmap topic not presented as a current operational capability |
+| Inventory only | Recorded hardware that is present without a claim of validated operation |
+| Lab platform | Equipment or software available for controlled laboratory use |
 
-<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=700&size=28&pause=1000&color=2E75B6&center=true&vCenter=true&width=700&lines=NEOXIX+INC.;Network+%26+Infrastructure+Engineer;Day+0+to+Production" alt="Typing SVG" />
+## Overview
 
-### Enterprise-Grade HomeLab · Day 0 to Production
-### Gatineau, QC, Canada · Bilingual MSP Portfolio
+This repository documents a segmented homelab built around VMware ESXi, Windows Server, Fortinet networking, Synology storage and containers, infrastructure monitoring, and an EVE-NG virtual networking lab. Its purpose is to demonstrate practical IT support and infrastructure work through accurate inventories, repeatable procedures, troubleshooting records, and evidence-based lab reports.
 
-[![FortiGate](https://img.shields.io/badge/FortiGate-60F_Perimeter-EE3124?style=for-the-badge&logo=fortinet&logoColor=white)](https://www.fortinet.com/)
-[![VMware](https://img.shields.io/badge/ESXi-256_GB_RAM-607078?style=for-the-badge&logo=vmware&logoColor=white)](https://www.vmware.com/)
-[![Synology](https://img.shields.io/badge/Synology-DS925%2B-4B9BD5?style=for-the-badge&logo=synology&logoColor=white)](https://www.synology.com/)
-[![Docker](https://img.shields.io/badge/Docker-13_Containers-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+The repository will progressively contain network diagrams, operating procedures, validated lab reports, troubleshooting records, and sanitized configuration examples. Configurations and screenshots will be reviewed and sanitized before publication to remove credentials, tokens, public IP addresses, serial numbers, and other sensitive data.
 
-[![FCF](https://img.shields.io/badge/Fortinet_FCF-✅_Oct_2025-00B140?style=for-the-badge)](https://www.fortinet.com/training/certification)
-[![CCNA](https://img.shields.io/badge/CCNA_200--301-In_Progress_Jul_2026-1BA0D7?style=for-the-badge&logo=cisco&logoColor=white)](https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/associate/ccna.html)
-[![NSE4](https://img.shields.io/badge/NSE4_FortiOS_7.6-In_Progress_Jul_2026-EE3124?style=for-the-badge)](https://www.fortinet.com/training/certification)
+## Current infrastructure
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-[REDACTED_VPN_IDENTITY]--akah-0077B5?style=flat-square&logo=linkedin)](https://linkedin.com/in/[REDACTED_VPN_IDENTITY]-akah)
-[![Website](https://img.shields.io/badge/Web-neoxix.ca-0A2342?style=flat-square&logo=cloudflare)](https://neoxix.ca)
-[![Email](https://img.shields.io/badge/Email-[REDACTED_VPN_IDENTITY]@neoxix.ca-EA4335?style=flat-square&logo=gmail)](mailto:[REDACTED_VPN_IDENTITY]@neoxix.ca)
+| Component | Platform | Role | Status |
+|---|---|---|---|
+| Hypervisor | Dell Precision T7910, 256 GB RAM; VMware ESXi 8.0 U3 | Hosts server and laboratory virtual machines | Operational and validated |
+| NAS | Synology DS925+ | Network storage and container host | Operational and validated |
+| Firewall | FortiGate 60F; FortiOS 7.6.x | Routing, firewall policy, and VLAN segmentation | Operational and validated |
+| Managed switch | TP-Link Omada TL-SG2218P PoE | Wired switching, PoE, and VLAN connectivity | Operational and validated |
+| Wireless access point | TP-Link Omada EAP670 Wi-Fi 6 | Wireless connectivity | Operational and validated |
+| UPS | CyberPower CP1000PFCLCD | Power protection | Inventory only |
+| Virtual network lab | EVE-NG at `10.80.0.10` | Progressive CCNA and Fortinet laboratories | Deployed; improving |
+| Additional firewall labs | FortiGate 200D, Sophos XG VM, pfSense CE VM | Isolated firewall configuration and testing platforms | Lab platform |
 
-</div>
+## Network segmentation
 
----
+The FortiGate and ESXi infrastructure is configured for the following ten private IPv4 VLAN segments. Eight are operational and validated; VLANs 35 and 70 are configured on the relevant infrastructure but await documented end-to-end validation. VLAN names describe their intended homelab function and do not imply a production business environment.
 
-## 🏢 About Neoxix Inc.
+| VLAN | Name | Subnet | Purpose | Status |
+|---:|---|---|---|---|
+| 30 | BR1 | `10.30.0.0/24` | Branch-style laboratory segment | Operational and validated |
+| 35 | BR2 | `10.35.0.0/24` | Branch-style laboratory segment | Configured; validation pending |
+| 40 | HQ | `10.40.0.0/24` | Main user and workstation segment | Operational and validated |
+| 50 | DC | `10.50.0.0/24` | Domain controllers and infrastructure services | Operational and validated |
+| 60 | GUEST | `10.60.0.0/24` | Guest network | Operational and validated |
+| 70 | VOIP | `10.70.0.0/24` | Voice network laboratory segment | Configured; validation pending |
+| 80 | TEST/LAB | `10.80.0.0/24` | EVE-NG and technical laboratories | Operational and validated |
+| 90 | MGMT | `10.90.0.0/24` | Infrastructure management | Operational and validated |
+| 100 | IOT | `10.100.0.0/24` | IoT device segment | Operational and validated |
+| 110 | SANDBOX | `10.110.0.0/24` | Controlled testing segment | Operational and validated |
 
-**Neoxix Inc.** is a bilingual MSP portfolio project built around a production-grade enterprise homelab — designed, deployed, and documented from scratch as a real client engagement.
+The sandbox is a segmented test network; it is not described as air-gapped.
 
-Every component is treated as a production system: change management procedures, before/after audits, rollback plans, and full technical documentation. The goal is to demonstrate real-world infrastructure skills in the Ottawa-Gatineau market.
+## Core systems and services
 
-> *"Build it like it's production. Document it like it's a client."*
+### Active Directory and DNS
 
-**Founder:** Kodjo Mathias Akah · Network & Infrastructure Engineer · 5+ years IT experience
+| System | Address | Role | Status |
+|---|---|---|---|
+| `DC1-HQ` | `10.50.0.10` | Windows Server 2025 domain controller and DNS server | Operational and validated |
+| `DC02-BR2` | `10.50.0.11` | Windows Server 2025 domain controller and DNS server | Operational and validated |
 
----
+The Active Directory domain is `neoxix.local`. Active Directory and DNS replication between both domain controllers is functional.
 
-## 🏗️ Infrastructure — Current State
+### Synology container environment
 
-### Physical Hardware
+Docker and Portainer are used on the Synology environment. The deployed service set includes:
 
-| Equipment | Model | Role | Status |
-|-----------|-------|------|--------|
-| **Perimeter Firewall** | FortiGate 60F | WAN + 802.1Q trunk | ✅ Active |
-| **Lab Firewall** | FortiGate 200D | Internal lab segments | ✅ Active |
-| **Hypervisor** | Dell T7910 #1 · 256 GB RAM | VMware ESXi 8 — primary | ✅ Active |
-| **Workstation** | Dell T7910 #2 · 256 GB RAM | Labs, CLI, Proxmox VE | ✅ Active |
-| **NAS** | Synology DS925+ | Storage, Docker, Backups | ✅ Active |
-| **Switch** | TP-Link Omada TL-SG2218P | 16 PoE+ / 2 SFP · 802.1Q | ✅ Active |
-| **WiFi** | TP-Link EAP670 | WiFi 6 — PoE+ | ✅ Active |
-| **UPS** | CyberPower CP1000PFCLCD | Sinewave 1000VA — USB→NAS | ✅ Active |
+| Service | Function | Status |
+|---|---|---|
+| Nginx Proxy Manager | Reverse-proxy management | Deployed; improving |
+| n8n | Workflow automation platform | Deployed; improving |
+| Omada Controller | Omada network management | Operational and validated |
+| Uptime Kuma | Service availability monitoring | Deployed; improving |
+| Pi-hole | DNS filtering | Deployed; improving |
+| Heimdall | Service dashboard | Deployed; improving |
+| Guacamole | Browser-based remote access | Deployed; improving |
+| Zabbix | Infrastructure monitoring | Deployed; improving |
+| Grafana | Monitoring visualization | Deployed; improving |
 
-### Network Architecture
+The status `Deployed; improving` confirms that a service exists and is in use without claiming that every integration, alert, dashboard, or operational procedure is complete.
 
-```
-                        ┌─────────────┐
-                        │   INTERNET  │
-                        │  Bell FTTH  │
-                        └──────┬──────┘
-                               │
-                    ┌──────────┴──────────┐
-                    │   FortiGate 60F     │
-                    │   FG60F-NEOXIX-HQ  │
-                    │   FortiOS 7.6.6    │
-                    └──────────┬──────────┘
-                               │ 802.1Q Trunk
-                    ┌──────────┴──────────┐
-                    │  Omada TL-SG2218P  │
-                    │  16x PoE+ / 2 SFP  │
-                    └──┬──┬──┬──┬──┬─────┘
-                       │  │  │  │  │
-          ┌────────────┘  │  │  │  └──────────────┐
-          │               │  │  │                  │
-    ┌─────┴──────┐   ┌────┴──┴──┴────┐     ┌──────┴──────┐
-    │  ESXi #1   │   │  DS925+ NAS  │     │  EAP670 AP  │
-    │  T7910     │   │  10.50.0.5   │     │  WiFi 6     │
-    │  256 GB    │   │  Docker ×13  │     │  VLAN60     │
-    └────────────┘   └──────────────┘     └─────────────┘
-```
+## Monitoring and security
 
-### VLAN Segmentation
+Wazuh is deployed on Ubuntu Server 22.04 and is being used for centralized monitoring and security telemetry.
 
-| VLAN | ID | Subnet | Purpose | Status |
-|------|----|--------|---------|--------|
-| BR1 | 30 | 10.30.0.0/24 | Branch 1 site | ✅ |
-| BR2 | 35 | 10.35.0.0/24 | Branch 2 site | ✅ |
-| HQ | 40 | 10.40.0.0/24 | Headquarters workstations | ✅ |
-| DC | 50 | 10.50.0.0/24 | Servers & services | ✅ |
-| GUEST | 60 | 10.60.0.0/24 | Guest WiFi — isolated | ✅ |
-| VOIP | 70 | 10.70.0.0/24 | VoIP lab | ✅ |
-| LAB | 80 | 10.80.0.0/24 | EVE-NG labs | ✅ |
-| MGMT | 90 | 10.90.0.0/24 | Management OOB | ✅ |
-| IOT | 100 | 10.100.0.0/24 | IoT devices — isolated | ✅ |
-| SANDBOX | 110 | 10.110.0.0/24 | Malware analysis — air-gapped | ✅ |
+| Capability | Current state | Status |
+|---|---|---|
+| Endpoint agents | Six connected agents | Operational and validated |
+| Syslog collection | FortiGate, ESXi, and Synology sources | Operational and validated |
+| File Integrity Monitoring (FIM) | Enabled | Operational and validated |
+| Security Configuration Assessment (SCA) | Enabled | Operational and validated |
+| Vulnerability detection | Enabled | Operational and validated |
+| Email alerts | Configured and functioning | Operational and validated |
 
----
+This deployment demonstrates monitoring configuration and log centralization. It does not represent a production security operations centre, and no completed incident investigations are claimed.
 
-## 🖥️ Services — Deployment Status
+An IKEv2 remote-access VPN is configured but remains **under diagnosis**. It is not presented as a fully operational remote-access service.
 
-### Core Infrastructure (ESXi)
+## Virtual networking lab
 
-| VM | Role | IP | Status |
-|----|------|----|--------|
-| DC01-HQ | Active Directory · DNS · DHCP | 10.50.0.10 | ✅ Active |
-| EVE-NG | CCNA/NSE4 Labs (43 scenarios) | 10.80.0.10 | ✅ Active |
-| DC02-BR2 | AD Replication | 10.50.0.11 | 🔄 In Progress |
-| SRV-RADIUS | FreeRADIUS · 802.1X | 10.50.0.30 | 📋 Planned |
-| SRV-WAZUH | Wazuh SIEM | 10.50.0.40 | 📋 Planned S5 |
-| SRV-THEHIVE | TheHive + Cortex | 10.50.0.51 | 📋 Planned S5 |
-| SRV-MISP | Threat Intelligence | 10.50.0.53 | 📋 Planned S6 |
-| SRV-CAPE | CAPEv2 Malware Sandbox | 10.110.0.20 | 📋 Planned S6 |
-| Bastion | Jump Host + MFA | 10.90.0.99 | 📋 Planned S4 |
-| Proxmox VE | IaC Lab (Terraform) | 192.168.2.26 | 🔄 In Progress |
+EVE-NG is deployed at `10.80.0.10` to support progressive CCNA 200-301 and Fortinet FortiOS laboratories. The environment provides a place to build, test, troubleshoot, and document network topologies and firewall configurations.
 
-### Docker Stack (Synology DS925+)
+Installed images or available platforms are not treated as evidence of mastery. Individual scenarios will be described as completed only after their objectives, configurations, validation steps, results, and troubleshooting notes have been documented.
 
-| Container | Role | Status |
-|-----------|------|--------|
-| Portainer | Container management | ✅ Active |
-| Guacamole | HTML5 remote access | ✅ Active |
-| Nginx Proxy Manager | Reverse proxy + SSL | ✅ Active |
-| Pi-hole | DNS · Ad blocking | ✅ Active |
-| Uptime Kuma | Service monitoring | ✅ Active |
-| Heimdall | Dashboard | ✅ Active |
-| Omada Controller | WiFi management | ✅ Active |
-| n8n | Workflow automation | ✅ Active |
-| Grafana | Metrics visualization | ✅ Active |
-| Prometheus | Metrics collection | ✅ Active |
-| Zabbix | Infrastructure monitoring | ✅ Active |
-| Odoo 18 | ERP | 📋 Planned S6 |
-| GLPI | Helpdesk | 📋 Planned S6 |
+Current laboratory platforms include EVE-NG, a FortiGate 200D, a Sophos XG virtual machine, and a pfSense CE virtual machine.
 
----
+## Skills demonstrated
 
-## 🔬 EVE-NG Labs — 43 Documented Scenarios
+The validated environment provides practical evidence of:
 
-<details>
-<summary>📚 CCNA 200-301 Labs (click to expand)</summary>
+- Hardware inventory and basic infrastructure lifecycle management.
+- VMware ESXi virtual-machine hosting and administration.
+- Windows Server 2025, Active Directory Domain Services, DNS, and replication validation.
+- IPv4 subnetting, VLAN segmentation, managed switching, Wi-Fi, and firewall policy administration.
+- FortiGate and FortiOS configuration in an operational homelab.
+- Synology NAS administration and Docker service management with Portainer.
+- Centralized monitoring, Syslog collection, endpoint agents, FIM, SCA, vulnerability detection, and alerting with Wazuh.
+- Service monitoring and visualization using Uptime Kuma, Zabbix, and Grafana.
+- Structured troubleshooting, technical documentation, change awareness, and secure publication practices.
 
-- VLANs, Trunking, STP, RSTP
-- OSPF Single-Area & Multi-Area
-- EIGRP & Route Redistribution
-- BGP basics & eBGP peering
-- NAT/PAT, ACLs, IPv6
-- DHCP, DNS, NTP configuration
-- WAN technologies, QoS
-- Network automation with Python + Netmiko
+These are homelab-based capabilities and do not imply professional client delivery or production-scale experience.
 
-</details>
+## Learning roadmap
 
-<details>
-<summary>🔒 NSE4 FortiGate 7.x Labs (click to expand)</summary>
+| Area | Planned work | Status |
+|---|---|---|
+| Cisco networking | Progressive CCNA 200-301 labs covering the published exam objectives | In progress |
+| Fortinet administration | FortiOS 7.6 administration studies and additional firewall labs after CCNA | Planned |
+| VPN troubleshooting | Diagnose and validate the IKEv2 remote-access implementation | Under diagnosis |
+| Automation and infrastructure as code | Python, Netmiko, Paramiko, Ansible, Terraform, APIs, and Postman | Planned learning and future labs |
+| Cloud and endpoint administration | Microsoft 365, Entra ID, Intune, Azure, Sentinel, Defender XDR, and KQL | Planned learning and future labs |
+| Security and packet analysis | Nmap, Zenmap, Wireshark, and Splunk | Planned learning and future labs |
+| Containers and orchestration | Kubernetes and advanced container operations | Planned learning and future labs |
+| Documentation | Sanitized diagrams, procedures, lab reports, configuration examples, and troubleshooting records | In progress |
 
-- FortiGate initial setup & interface config
-- Firewall policies & Security Profiles
-- VPN IPsec Site-to-Site & SSL VPN
-- VLAN segmentation & inter-VLAN routing
-- IDS/IPS, Web Filtering, App Control
-- HA Clustering (Active-Passive)
-- FortiGate REST API automation
+Roadmap entries are learning goals, not claims of operational proficiency.
 
-</details>
+## Certifications
 
----
+### Obtained
 
-## 🛠️ Automation & IaC
+| Certification | Issuer | Date obtained |
+|---|---|---|
+| Fortinet Certified Fundamentals in Cybersecurity | Fortinet | October 2025 |
+| Fortinet NSE 1 Certified in Cybersecurity | Fortinet | October 2025 |
+| Fortinet NSE 2 Certified in Cybersecurity | Fortinet | October 2025 |
 
-```bash
-# Repo structure (in progress)
-neoxix-homelab/
-├── ansible/          # Playbooks — OS config, AD join, service deploy
-├── terraform/        # Proxmox VM provisioning (Telmate provider v3.x)
-├── python/           # FortiGate REST API scripts, NetOps tools
-├── fortigate/        # FortiGate 60F config exports (sanitized)
-├── eve-ng/           # Lab topologies + scenario docs
-├── docker/           # docker-compose files for DS925+
-└── docs/             # Architecture diagrams (Draw.io)
-```
+### In preparation
 
----
+| Certification | Target | Status |
+|---|---|---|
+| Cisco CCNA 200-301 | Exam planned for September 30, 2026 | In preparation |
+| Fortinet NSE 4 / FortiOS 7.6 Administrator | Planned after CCNA | Planned |
 
-## 📜 Certifications
+CCNA and NSE 4 are not held certifications.
 
-| Certification | Issuer | Date | Status |
-|--------------|--------|------|--------|
-| **Fortinet Certified Fundamentals (FCF)** | Fortinet | Oct 2025 | ✅ Obtained |
-| **CCNA 200-301** | Cisco | Jul 2026 (target) | 📖 Studying |
-| **NSE4 — Network Security Professional** | Fortinet | Jul 2026 (target) | 📖 Studying |
+## Documentation and security practices
 
----
+- Record the purpose, prerequisites, implementation steps, validation method, results, and rollback considerations for documented changes.
+- Separate confirmed operating state from installed software, work in progress, troubleshooting, and planned work.
+- Sanitize configurations, logs, screenshots, and diagrams before publication.
+- Exclude passwords, tokens, private keys, public IP addresses, serial numbers, and other identifying or security-sensitive values.
+- Use private addresses only where they clarify the lab design and do not expose external access details.
+- Update documentation when validation changes the known state of the environment.
 
-## 📊 Tech Stack
+## Current limitations
 
-**Networking:** FortiGate · Cisco IOS · VLAN/802.1Q · OSPF · BGP · IPsec VPN · 802.1X RADIUS · TP-Link Omada
-
-**Virtualization:** VMware ESXi 8 · VMware vSphere · EVE-NG · GNS3 · Synology DSM · iSCSI · NFS
-
-**Systems:** Windows Server 2022/2019 · Active Directory · GPO · Linux (Ubuntu · Rocky) · PowerShell
-
-**Security:** Wazuh SIEM · TheHive · Cortex · MISP · CAPEv2 · PKI/CA · Zero Trust segmentation
-
-**Automation:** Ansible · Python · Terraform · Git · Docker · REST API (FortiGate)
-
-**Monitoring:** Grafana · Prometheus · Zabbix · Uptime Kuma · Pi-hole
-
----
-
-## 📬 Contact
-
-**Kodjo Mathias Akah** — Network & Infrastructure Engineer
-Founder, Neoxix Inc. · Gatineau, QC, Canada
-
-| | |
-|-|-|
-| 🌐 **Web** | [neoxix.ca](https://neoxix.ca) |
-| 💼 **LinkedIn** | [linkedin.com/in/[REDACTED_VPN_IDENTITY]-akah](https://linkedin.com/in/[REDACTED_VPN_IDENTITY]-akah) |
-| 📧 **Email** | [[REDACTED_VPN_IDENTITY]@neoxix.ca](mailto:[REDACTED_VPN_IDENTITY]@neoxix.ca) |
-| 📞 **Phone** | 873-354-2056 |
-
----
-
-<div align="center">
-
-*Building real infrastructure. Documenting everything.*
-*Open to Network Administrator · Infrastructure Engineer · Junior SOC Analyst roles in Ottawa-Gatineau.*
-
-![Visitors](https://visitor-badge.laobi.icu/badge?page_id=neoxix-inc.neoxix-inc)
-
-</div>
+- This is a personal homelab with limited redundancy and is not a production, enterprise, MSP, or client environment.
+- The IKEv2 remote-access VPN is under diagnosis.
+- EVE-NG scenarios are being developed progressively; no fixed number of completed or documented scenarios is claimed.
+- Deployed services may still need stronger documentation, alert tuning, backup testing, access review, and recovery validation.
+- Technologies listed in the learning roadmap are not presented as mastered or operational without direct evidence.
+- Repository documentation is being refreshed; older supporting documents may contain stale or unvalidated details until they are reviewed separately.
