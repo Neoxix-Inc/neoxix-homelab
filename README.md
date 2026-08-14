@@ -9,6 +9,11 @@ Personal technical homelab and portfolio project maintained by **Kodjo Mathias A
 | Operational and validated | Deployed and confirmed to perform the stated function |
 | Configured; validation pending | Present on the relevant infrastructure, but awaiting documented end-to-end validation |
 | Deployed; improving | Running, with configuration, documentation, or coverage still being refined |
+| Installed; validation pending | Installed, but configuration maturity or operation has not yet been fully validated |
+| Installed; configuration pending | Installed, but the connections or monitoring targets needed for its intended function are not configured |
+| Tested lab platform | Used successfully for laboratory testing without a claim of ongoing operation |
+| Non-functional | Present in inventory but not currently working |
+| Available | Present and accessible in the deployed environment |
 | Under diagnosis | Implemented or configured, but not yet confirmed fully operational |
 | Planned | Future learning or laboratory work; not presented as current capability |
 | In progress | Work or study that has started but is not complete |
@@ -30,15 +35,17 @@ The repository will progressively contain network diagrams, operating procedures
 | Hypervisor | Dell Precision T7910, 256 GB RAM; VMware ESXi 8.0 U3 | Hosts server and laboratory virtual machines | Operational and validated |
 | NAS | Synology DS925+ | Network storage and container host | Operational and validated |
 | Firewall | FortiGate 60F; FortiOS 7.6.x | Routing, firewall policy, and VLAN segmentation | Operational and validated |
-| Managed switch | TP-Link Omada TL-SG2218P PoE | Wired switching, PoE, and VLAN connectivity | Operational and validated |
-| Wireless access point | TP-Link Omada EAP670 Wi-Fi 6 | Wireless connectivity | Operational and validated |
+| Managed switch | TP-Link Omada TL-SG2218P PoE | Planned wired switching, PoE, and VLAN connectivity | Planned |
+| Wireless access point | TP-Link Omada EAP670 Wi-Fi 6 | Planned wireless connectivity | Planned |
 | UPS | CyberPower CP1000PFCLCD | Power protection | Inventory only |
 | Virtual network lab | EVE-NG at `10.80.0.10` | Progressive CCNA and Fortinet laboratories | Deployed; improving |
-| Additional firewall labs | FortiGate 200D, Sophos XG VM, pfSense CE VM | Isolated firewall configuration and testing platforms | Lab platform |
+| Firewall lab hardware | FortiGate 200D | Physical firewall laboratory platform | Non-functional |
+| Firewall lab VM | Sophos XG VM | Virtual firewall laboratory platform | Installed; validation pending |
+| Firewall lab VM | pfSense CE VM | Virtual firewall laboratory platform | Tested lab platform |
 
 ## Network segmentation
 
-The FortiGate and ESXi infrastructure is configured for the following ten private IPv4 VLAN segments. Eight are operational and validated; VLANs 35 and 70 are configured on the relevant infrastructure but await documented end-to-end validation. VLAN names describe their intended homelab function and do not imply a production business environment.
+Ten VLAN interfaces are configured on the FortiGate, with corresponding ESXi port groups. Nine VLANs are operational and validated; only VLAN 35 awaits documented end-to-end validation. VLAN names describe their intended homelab function and do not imply a production business environment.
 
 | VLAN | Name | Subnet | Purpose | Status |
 |---:|---|---|---|---|
@@ -47,7 +54,7 @@ The FortiGate and ESXi infrastructure is configured for the following ten privat
 | 40 | HQ | `10.40.0.0/24` | Main user and workstation segment | Operational and validated |
 | 50 | DC | `10.50.0.0/24` | Domain controllers and infrastructure services | Operational and validated |
 | 60 | GUEST | `10.60.0.0/24` | Guest network | Operational and validated |
-| 70 | VOIP | `10.70.0.0/24` | Voice network laboratory segment | Configured; validation pending |
+| 70 | VOIP | `10.70.0.0/24` | Voice network laboratory segment | Operational and validated |
 | 80 | TEST/LAB | `10.80.0.0/24` | EVE-NG and technical laboratories | Operational and validated |
 | 90 | MGMT | `10.90.0.0/24` | Infrastructure management | Operational and validated |
 | 100 | IOT | `10.100.0.0/24` | IoT device segment | Operational and validated |
@@ -61,53 +68,59 @@ The sandbox is a segmented test network; it is not described as air-gapped.
 
 | System | Address | Role | Status |
 |---|---|---|---|
-| `DC1-HQ` | `10.50.0.10` | Windows Server 2025 domain controller and DNS server | Operational and validated |
+| `DC01-HQ` | `10.50.0.10` | Windows Server 2025 domain controller and DNS server | Operational and validated |
 | `DC02-BR2` | `10.50.0.11` | Windows Server 2025 domain controller and DNS server | Operational and validated |
 
-The Active Directory domain is `neoxix.local`. Active Directory and DNS replication between both domain controllers is functional.
+The Active Directory domain is `neoxix.local`. Active Directory and DNS replication between both domain controllers is functional. DHCP is provided by the FortiGate rather than Windows Server. OU design, security groups, permissions, and Group Policy work remain future work, and no domain-controller backup is currently available.
 
 ### Synology container environment
 
-Docker and Portainer are used on the Synology environment. The deployed service set includes:
+Docker and Portainer are deployed on the Synology environment. The table below distinguishes deployed, installed-but-unvalidated, configuration-pending, and planned services:
 
 | Service | Function | Status |
 |---|---|---|
-| Nginx Proxy Manager | Reverse-proxy management | Deployed; improving |
-| n8n | Workflow automation platform | Deployed; improving |
-| Omada Controller | Omada network management | Operational and validated |
-| Uptime Kuma | Service availability monitoring | Deployed; improving |
-| Pi-hole | DNS filtering | Deployed; improving |
-| Heimdall | Service dashboard | Deployed; improving |
-| Guacamole | Browser-based remote access | Deployed; improving |
-| Zabbix | Infrastructure monitoring | Deployed; improving |
-| Grafana | Monitoring visualization | Deployed; improving |
+| NetBox | Documents IP addresses, prefixes, and VLANs; device, virtual-machine, and cabling documentation remains future work | Deployed; improving |
+| Nginx Proxy Manager | Reverse-proxy management | Installed; validation pending |
+| n8n | Workflow automation platform | Installed; validation pending |
+| Heimdall | Service dashboard | Installed; validation pending |
+| Home Assistant | Home automation platform | Installed; validation pending |
+| Uptime Kuma | Service availability monitoring; no targets currently configured | Installed; configuration pending |
+| Guacamole | Browser-based remote access; RDP, SSH, and VNC connections not configured | Installed; configuration pending |
+| Omada Controller | Planned Omada network management | Planned |
+| Pi-hole | Planned DNS filtering | Planned |
+| Zabbix | Planned infrastructure monitoring | Planned |
+| Grafana | Planned monitoring visualization | Planned |
 
-The status `Deployed; improving` confirms that a service exists and is in use without claiming that every integration, alert, dashboard, or operational procedure is complete.
+Installed services are not presented as fully configured or operational unless explicitly stated.
+
+### Hyper Backup
+
+Hyper Backup has saved the DSM configuration. Shared-folder backup is not configured. Available cloud destinations include Synology C2, Google Drive, and OneDrive. DSM and folder restoration tests have been performed.
 
 ## Monitoring and security
 
-Wazuh is deployed on Ubuntu Server 22.04 and is being used for centralized monitoring and security telemetry.
+Wazuh is deployed on an Ubuntu Server 22.04 VM under ESXi and is being used for centralized monitoring and security telemetry. Six agents are connected: two Windows agents and four Linux agents. Sources include Windows, Linux, ESXi, FortiGate, and the Synology NAS.
 
 | Capability | Current state | Status |
 |---|---|---|
-| Endpoint agents | Six connected agents | Operational and validated |
-| Syslog collection | FortiGate, ESXi, and Synology sources | Operational and validated |
-| File Integrity Monitoring (FIM) | Enabled | Operational and validated |
-| Security Configuration Assessment (SCA) | Enabled | Operational and validated |
-| Vulnerability detection | Enabled | Operational and validated |
-| Email alerts | Configured and functioning | Operational and validated |
+| Endpoint agents | Two Windows and four Linux agents connected | Available |
+| Source coverage | Windows, Linux, ESXi, FortiGate, and Synology NAS | Available |
+| File Integrity Monitoring (FIM) | Available | Available |
+| Security Configuration Assessment (SCA) | Available | Available |
+| Vulnerability detection | Available | Available |
+| Alerts and dashboards | Available | Available |
 
-This deployment demonstrates monitoring configuration and log centralization. It does not represent a production security operations centre, and no completed incident investigations are claimed.
+This deployment demonstrates homelab monitoring configuration and log centralization. No security incident has yet been fully investigated, and the deployment is not presented as production SOC experience.
 
-An IKEv2 remote-access VPN is configured but remains **under diagnosis**. It is not presented as a fully operational remote-access service.
+An IKEv2 remote-access VPN previously passed a test, was later stopped, and now remains **under diagnosis** pending investigation. It is not presented as an operational remote-access service.
 
 ## Virtual networking lab
 
-EVE-NG is deployed at `10.80.0.10` to support progressive CCNA 200-301 and Fortinet FortiOS laboratories. The environment provides a place to build, test, troubleshoot, and document network topologies and firewall configurations.
+EVE-NG is deployed at `10.80.0.10`. Laboratory images are installed, but the large CCNA and NSE 4 laboratory program has not started. The environment is intended to support future network-topology and firewall-configuration labs.
 
 Installed images or available platforms are not treated as evidence of mastery. Individual scenarios will be described as completed only after their objectives, configurations, validation steps, results, and troubleshooting notes have been documented.
 
-Current laboratory platforms include EVE-NG, a FortiGate 200D, a Sophos XG virtual machine, and a pfSense CE virtual machine.
+Current laboratory inventory includes EVE-NG, a non-functional FortiGate 200D, an installed Sophos XG virtual machine, and a tested pfSense CE virtual machine.
 
 ## Skills demonstrated
 
@@ -116,11 +129,11 @@ The validated environment provides practical evidence of:
 - Hardware inventory and basic infrastructure lifecycle management.
 - VMware ESXi virtual-machine hosting and administration.
 - Windows Server 2025, Active Directory Domain Services, DNS, and replication validation.
-- IPv4 subnetting, VLAN segmentation, managed switching, Wi-Fi, and firewall policy administration.
+- IPv4 subnetting, VLAN segmentation, and FortiGate firewall policy administration.
 - FortiGate and FortiOS configuration in an operational homelab.
 - Synology NAS administration and Docker service management with Portainer.
 - Centralized monitoring, Syslog collection, endpoint agents, FIM, SCA, vulnerability detection, and alerting with Wazuh.
-- Service monitoring and visualization using Uptime Kuma, Zabbix, and Grafana.
+- Deployment of monitoring and security tooling, with configuration maturity stated separately from installation.
 - Structured troubleshooting, technical documentation, change awareness, and secure publication practices.
 
 These are homelab-based capabilities and do not imply professional client delivery or production-scale experience.
@@ -129,7 +142,7 @@ These are homelab-based capabilities and do not imply professional client delive
 
 | Area | Planned work | Status |
 |---|---|---|
-| Cisco networking | Progressive CCNA 200-301 labs covering the published exam objectives | In progress |
+| Cisco networking | Progressive CCNA 200-301 labs covering the published exam objectives | Planned |
 | Fortinet administration | FortiOS 7.6 administration studies and additional firewall labs after CCNA | Planned |
 | VPN troubleshooting | Diagnose and validate the IKEv2 remote-access implementation | Under diagnosis |
 | Automation and infrastructure as code | Python, Netmiko, Paramiko, Ansible, Terraform, APIs, and Postman | Planned learning and future labs |
