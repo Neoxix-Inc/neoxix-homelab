@@ -1,40 +1,30 @@
 # Active Directory — neoxix.local
 
-## Forest Information
-| Parameter | Value |
-|---|---|
-| Forest Name | neoxix.local |
-| Forest Level | Windows Server 2025 |
-| Domain Level | Windows Server 2025 |
-| PKI | Neoxix-Root-CA (ADCS Enterprise Root) |
+## Current state
 
-## Domain Controllers
-| Hostname | IP | Role | Site |
-|---|---|---|---|
-| DC1-HQ | 10.50.0.10 | PDC Emulator, RID Master, Schema Master | Default-First-Site-Name |
-| DC02-BR2 | 10.50.0.11 | Additional DC, Global Catalog | Default-First-Site-Name |
+The `neoxix.local` domain is provided by two Windows Server 2025 domain controllers.
 
-## Replication Status
-- Last verified: 2026-06-28
-- Partitions replicated: 5/5
-- Errors: 0
-
-## PKI — ADCS
-| Component | Value |
-|---|---|
-| CA Name | Neoxix-Root-CA |
-| CA Type | Enterprise Root CA |
-| Server | DC1-HQ.neoxix.local |
-| Templates | VPN-Server, VPN-Client |
-
-## DNS
-| Zone | Type | Server |
+| Hostname | Role | Status |
 |---|---|---|
-| neoxix.local | Primary | DC1-HQ, DC02-BR2 |
-| 50.10.in-addr.arpa | Reverse | DC1-HQ |
+| `DC01-HQ` | Domain controller and DNS server | Operational and validated |
+| `DC02-BR2` | Domain controller and DNS server | Operational and validated |
 
-## Organizational Units
-- OU=Servers,DC=neoxix,DC=local
-- OU=Workstations,DC=neoxix,DC=local
-- OU=Users,DC=neoxix,DC=local
-- OU=Groups,DC=neoxix,DC=local
+Active Directory and DNS replication between the two domain controllers is functional. DHCP is provided by the FortiGate rather than Windows Server.
+
+## Work not yet completed
+
+The following work is not yet complete and is not represented as operational:
+
+- Organizational-unit design.
+- Security-group design.
+- Permissions implementation and validation.
+- Group Policy design and validation.
+- Domain-controller backup.
+
+## Unvalidated details
+
+The authoritative baseline does not establish forest or domain functional levels, FSMO role placement, reverse DNS zones, or a deployed PKI/Active Directory Certificate Services design. Root certification authorities, certificate templates, and certificate inventories are therefore intentionally omitted until they are independently validated and sanitized.
+
+## Validation boundary
+
+Current validation is limited to the stated domain-controller, DNS, and replication functions. Future identity, policy, permission, backup, or certificate work must be documented and tested before its status changes.
