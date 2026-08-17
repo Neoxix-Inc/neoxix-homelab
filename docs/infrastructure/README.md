@@ -11,9 +11,9 @@ This inventory follows the status definitions and validated baseline in the repo
 | FortiGate 60F | Routing, firewall policy, DHCP, and VLAN segmentation | Operational and validated; single firewall |
 | `DC01-HQ` | Windows Server 2025 domain controller and DNS server | Operational and validated; no domain-controller backup currently available |
 | `DC02-BR2` | Windows Server 2025 domain controller and DNS server | Operational and validated; no domain-controller backup currently available |
-| Wazuh | Ubuntu Server 22.04 VM under ESXi | Deployed and improving; no incident fully investigated yet |
-| EVE-NG | Virtual network laboratory | Deployed and improving; scenarios remain progressive work |
-| Docker and Portainer | Synology container environment | Deployed; individual service maturity varies |
+| Wazuh | Ubuntu Server 22.04 VM under ESXi | Deployed; improving — no incident fully investigated yet |
+| EVE-NG | Virtual network laboratory | Deployed; improving — scenarios remain progressive work |
+| Docker and Portainer | Synology container environment | Deployed; improving — individual service maturity varies |
 | FortiGate 200D | Physical firewall laboratory platform | Non-functional |
 | Sophos XG VM | Virtual firewall laboratory platform | Installed; validation pending |
 | pfSense CE VM | Virtual firewall laboratory platform | Tested lab platform |
