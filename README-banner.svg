@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="440" viewBox="0 0 1200 440" role="img" aria-labelledby="title desc">
+  <title id="title">NEOXIX Homelab</title>
+  <desc id="desc">Laboratoire personnel de réseaux, systèmes, virtualisation et sécurité.</desc>
+  <!-- Editorial GitHub banner, not an official logo or brand master. Palette rendered from Neoxix-Inc/neoxix-brand tokens/source/neoxix.tokens.json (blob 0.1.0). No symbol geometry reproduced. -->
+  <defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#36504B" stroke-width="0.5" opacity="0.28"/></pattern>
+    <linearGradient id="wash" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#0B1716"/><stop offset="1" stop-color="#173D39"/></linearGradient>
+  </defs>
+  <rect width="1200" height="440" rx="18" fill="#0B1716"/>
+  <rect x="760" width="440" height="440" rx="18" fill="url(#wash)"/>
+  <rect width="1200" height="440" rx="18" fill="url(#grid)"/>
+  <rect x="1" y="1" width="1198" height="438" rx="17" fill="none" stroke="#36504B"/>
+  <g font-family="'Source Sans 3', 'Segoe UI', Arial, sans-serif">
+    <rect x="56" y="44" width="26" height="4" rx="2" fill="#F2B45F"/>
+    <text x="94" y="52" font-size="14" letter-spacing="2" fill="#A9BEBA">NEOXIX INC. / INFRASTRUCTURE LAB</text>
+    <text x="56" y="167" font-size="76" font-weight="700" fill="#EAF4F2">NEOXIX</text>
+    <text x="56" y="246" font-size="76" font-weight="700" fill="#59C7B9">Homelab</text>
+    <text font-size="21" fill="#A9BEBA"><tspan x="56" y="300">Explorer l’infrastructure. Documenter chaque étape.</tspan></text>
+    <path d="M56 366 H744" stroke="#36504B"/>
+    <text x="56" y="400" font-size="14" letter-spacing="2" fill="#A9BEBA">PUBLIC REPOSITORY</text>
+    <text x="744" y="400" text-anchor="end" font-size="14" fill="#F2B45F">Explore / Build / Document</text>
+    <rect x="822" y="99" width="316" height="262" rx="14" fill="#122421" stroke="#36504B"/>
+    <circle cx="852" cy="130" r="4" fill="#59C7B9"/>
+    <text x="868" y="135" font-size="13" letter-spacing="2" fill="#A9BEBA">PROJECT FOCUS</text>
+    <rect x="846" y="168" width="268" height="48" rx="8" fill="#0B1716" stroke="#36504B"/>
+      <text x="864" y="198" font-size="13" fill="#59C7B9">01</text>
+      <text x="900" y="198" font-size="19" fill="#EAF4F2">Networking</text><rect x="846" y="230" width="268" height="48" rx="8" fill="#0B1716" stroke="#36504B"/>
+      <text x="864" y="260" font-size="13" fill="#59C7B9">02</text>
+      <text x="900" y="260" font-size="19" fill="#EAF4F2">Virtualization</text><rect x="846" y="292" width="268" height="48" rx="8" fill="#0B1716" stroke="#36504B"/>
+      <text x="864" y="322" font-size="13" fill="#59C7B9">03</text>
+      <text x="900" y="322" font-size="19" fill="#EAF4F2">Operations</text>
+  </g>
+</svg>

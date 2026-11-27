@@ -1,3 +1,21 @@
+<!-- BEGIN NEOXIX REPOSITORY PRESENTATION -->
+<p align="center">
+  <img src="README-banner.svg" alt="NEOXIX Homelab — Explorer l’infrastructure. Documenter chaque étape." width="1200" />
+</p>
+
+<p align="center"><strong>Laboratoire personnel de réseaux, systèmes, virtualisation et sécurité.</strong></p>
+
+<p align="center">
+<img alt="NEOXIX: public" src="https://img.shields.io/static/v1?label=NEOXIX&amp;message=public&amp;color=36504B&amp;style=flat-square" />
+<img alt="Status: Personal lab" src="https://img.shields.io/static/v1?label=Status&amp;message=Personal%20lab&amp;color=8C5200&amp;style=flat-square" />
+<img alt="Focus: Networking" src="https://img.shields.io/static/v1?label=Focus&amp;message=Networking&amp;color=0B5C57&amp;style=flat-square" />
+</p>
+
+<p align="center"><a href="docs">Documentation</a> · <a href="https://github.com/Neoxix-Inc">Organisation</a> · <a href="https://neoxix.ca">Site</a></p>
+<!-- END NEOXIX REPOSITORY PRESENTATION -->
+
+---
+
 # README.md — Neoxix Inc. GitHub Organization Profile
 
 # Content to copy into GitHub
